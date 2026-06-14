@@ -1,5 +1,5 @@
 #include "todolista.h"
-#include "qevent.h"
+#include "savethread.h"
 #include <QLineEdit>
 #include <QPushButton>
 #include <QTableView>
@@ -11,6 +11,9 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QProgressBar>
+#include <QFile>
+
 
 
 todolistA::todolistA(QWidget *parent)
@@ -29,6 +32,9 @@ todolistA::todolistA(QWidget *parent)
     QTableView *view = new QTableView(this);
     view->setModel(model);
 
+    // 进度条
+    QProgressBar *bar = new QProgressBar;
+
     // 底部
     QPushButton *delBtn = new QPushButton("删除");
     QPushButton *finishBtn = new QPushButton("完成");
@@ -36,11 +42,16 @@ todolistA::todolistA(QWidget *parent)
     footerBox->addWidget(delBtn);
     footerBox->addWidget(finishBtn);
 
+    // 保存按钮
+    QPushButton *confirmBtn = new QPushButton("保存");
+
     // 整体
     QVBoxLayout *container = new QVBoxLayout;
     container->addLayout(headerBox);
     container->addWidget(view);
+    container->addWidget(bar);
     container->addLayout(footerBox);
+    container->addWidget(confirmBtn);
 
     setLayout(container);
 
@@ -57,7 +68,7 @@ todolistA::todolistA(QWidget *parent)
         model->appendRow(row);
         keyWordEdit->clear();
         keyWordEdit->setFocus();
-        saveToFile(model);
+        // saveToFile(model);
     });
 
     // 删除
@@ -68,7 +79,7 @@ todolistA::todolistA(QWidget *parent)
             return;
         }
         model->removeRow(index.row());
-        saveToFile(model);
+        // saveToFile(model);
     });
     // 完成
     connect(finishBtn, &QPushButton::clicked, this, [=](){
@@ -78,10 +89,31 @@ todolistA::todolistA(QWidget *parent)
             return;
         }
         model->item(index.row(), 1)->setText("已完成");
-        saveToFile(model);
+        // saveToFile(model);
     });
 
     loadFromFile(model);
+
+    SaveThread *worker = new SaveThread(this);
+
+    connect(confirmBtn, &QPushButton::clicked, this, [=](){
+        bar->setValue(0);
+        worker->start();
+    });
+
+    // 线程执行中
+    connect(worker, &SaveThread::progressChanged, bar, &QProgressBar::setValue);
+
+    // 线程开始
+    connect(worker, &SaveThread::started, this, [=](){
+        confirmBtn->setEnabled(false);
+    });
+
+    // 线程完成
+    connect(worker, &SaveThread::finished, this, [=](){
+        saveToFile(model);
+        confirmBtn->setEnabled(true);
+    });
 }
 
 

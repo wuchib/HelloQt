@@ -7,12 +7,15 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    drawwidget.cpp \
+    # drawwidget.cpp \
     main.cpp \
-
+    savethread.cpp \
+    todolista.cpp
 
 HEADERS += \
-    drawwidget.h \
+    # drawwidget.h \
+    savethread.h \
+    todolista.h
 
 
 TRANSLATIONS += \
