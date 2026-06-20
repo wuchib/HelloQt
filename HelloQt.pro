@@ -10,14 +10,15 @@ SOURCES += \
     # drawwidget.cpp \
     # countertask.cpp \
     # counterwidget.cpp \
-    handledelegate.cpp \
-    main.cpp \
+    boardwidget.cpp \
+    # handledelegate.cpp \
+    main.cpp
     # savethread.cpp \
     # todolista.cpp \
     # mutextask.cpp \
-    savestudentthread.cpp \
-    scoredelegate.cpp \
-    studentwidget.cpp
+    # savestudentthread.cpp \
+    # scoredelegate.cpp \
+    # studentwidget.cpp
     # weatherwidget.cpp
 
 HEADERS += \
@@ -27,10 +28,11 @@ HEADERS += \
     # savethread.h \
     # todolista.h \
     # mutextask.h \
-    handledelegate.h \
-    savestudentthread.h \
-    scoredelegate.h \
-    studentwidget.h
+    boardwidget.h
+    # handledelegate.h \
+    # savestudentthread.h \
+    # scoredelegate.h \
+    # studentwidget.h
     # weatherwidget.h
 
 

@@ -7,7 +7,8 @@
 #include <QTranslator>
 // #include "counterwidget.h"
 // #include "weatherwidget.h"
-#include "studentwidget.h"
+// #include "studentwidget.h"
+#include "boardwidget.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,7 +22,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    StudentWidget w;
+    BoardWidget w;
     w.show();
     return QApplication::exec();
 }
