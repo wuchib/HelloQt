@@ -1,4 +1,4 @@
-QT += widgets
+QT += widgets network
 
 CONFIG += c++17
 
@@ -8,14 +8,22 @@ CONFIG += c++17
 
 SOURCES += \
     # drawwidget.cpp \
+    # countertask.cpp \
+    # counterwidget.cpp \
     main.cpp \
-    savethread.cpp \
-    todolista.cpp
+    # savethread.cpp \
+    # todolista.cpp \
+    # mutextask.cpp \
+    weatherwidget.cpp
 
 HEADERS += \
     # drawwidget.h \
-    savethread.h \
-    todolista.h
+    # countertask.h \
+    # counterwidget.h \
+    # savethread.h \
+    # todolista.h \
+    # mutextask.h \
+    weatherwidget.h
 
 
 TRANSLATIONS += \

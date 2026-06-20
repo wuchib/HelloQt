@@ -1,10 +1,12 @@
 // #include "mainwindow.h"
 // #include "personinfowidget.h"
-#include "todolista.h"
+// #include "todolista.h"
 // #include "drawwidget.h"
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+// #include "counterwidget.h"
+#include "weatherwidget.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,7 +20,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    todolistA w;
+    WeatherWidget w;
     w.show();
     return QApplication::exec();
 }
