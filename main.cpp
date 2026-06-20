@@ -6,7 +6,8 @@
 #include <QLocale>
 #include <QTranslator>
 // #include "counterwidget.h"
-#include "weatherwidget.h"
+// #include "weatherwidget.h"
+#include "studentwidget.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +21,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    WeatherWidget w;
+    StudentWidget w;
     w.show();
     return QApplication::exec();
 }

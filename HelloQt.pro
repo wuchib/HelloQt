@@ -14,7 +14,9 @@ SOURCES += \
     # savethread.cpp \
     # todolista.cpp \
     # mutextask.cpp \
-    weatherwidget.cpp
+    savestudentthread.cpp \
+    studentwidget.cpp
+    # weatherwidget.cpp
 
 HEADERS += \
     # drawwidget.h \
@@ -23,7 +25,9 @@ HEADERS += \
     # savethread.h \
     # todolista.h \
     # mutextask.h \
-    weatherwidget.h
+    savestudentthread.h \
+    studentwidget.h
+    # weatherwidget.h
 
 
 TRANSLATIONS += \
