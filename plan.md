@@ -83,3 +83,61 @@
 | **代码规范** | 每个控件练习都写一个小 demo，不要光看 |
 | **源码** | 遇到困惑时直接看 Qt 源码（Qt Creator 里 F2 跳转），比任何教程都权威 |
 | **Assistant** | Qt 自带的 Qt Assistant 离线文档工具，建议常开 |
+
+---
+
+## 第六阶段：界面美化 & 自定义（2-3 周）
+
+### 12. StyleSheet (QSS)
+- 语法：选择器、属性、伪状态（`:hover`、`:pressed`、`:checked`）
+- 全局样式 vs 控件独立样式
+- 常用美化：按钮圆角、边框阴影、表格斑马纹、进度条渐变色
+- 练习：给学生管理系统写一套 QSS 皮肤
+
+### 13. 自定义绘制
+- 重写 `paintEvent()` 画自定义控件外观
+- 自定义 Delegate：`QStyledItemDelegate` 控制列表/表格单元格绘制
+- 练习：学生管理系统的成绩列用不同颜色（高分绿、中分黄、低分红）
+
+### 14. QGraphicsView 框架
+- `QGraphicsScene`（场景）、`QGraphicsView`（视图）、`QGraphicsItem`（图元）
+- 拖拽、缩放、旋转图元
+- 碰撞检测
+- 练习：做一个简单画板（拖拽矩形、圆形，可以移动）
+
+## 第七阶段：数据 & 存储（2-3 周）
+
+### 15. SQLite 数据库
+- `QSqlDatabase` 连接数据库
+- `QSqlQuery` 执行 SQL（建表、增删改查）
+- `QSqlTableModel` + `QTableView` 绑定显示
+- 练习：把学生管理系统的 JSON 存储替换为 SQLite
+
+### 16. 配置与设置
+- `QSettings` 读写应用配置（窗口位置、最近打开文件等）
+- `.ini` 格式 vs 注册表
+
+## 第八阶段：实用技能（3-4 周）
+
+### 17. 串口通信
+- `QSerialPort` + `QSerialPortInfo`
+- 波特率、数据位、校验位
+- 练习：串口调试助手（发送 + 接收）
+
+### 18. TCP/UDP Socket
+- `QTcpServer` + `QTcpSocket`（TCP 服务端/客户端）
+- `QUdpSocket`（UDP 通信）
+- 练习：局域网聊天室
+
+### 19. 多媒体
+- `QMediaPlayer` + `QVideoWidget`（音频/视频播放）
+- `QCamera`（摄像头采集）
+- 练习：简易音乐播放器
+
+## 第九阶段：项目实战
+
+挑一个深入做完整：
+- **考试管理系统**（QSS 美化 + SQLite + 打印表格 + 数据导出 CSV）
+- **串口调试助手**（QSerialPort + 日志保存 + QSS）
+- **局域网聊天室**（TCP + 多线程接收 + 表情包）
+- **仓库进销存**（SQLite + 权限登录 + 报表统计）

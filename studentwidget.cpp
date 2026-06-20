@@ -1,5 +1,7 @@
 #include "studentwidget.h"
 #include "savestudentthread.h"
+#include "scoreDelegate.h"
+#include "handledelegate.h"
 #include <QLineEdit>
 #include <QPushButton>
 #include <QTableView>
@@ -39,19 +41,28 @@ StudentWidget::StudentWidget(QWidget *parent)
     form->addWidget(addBtn);
 
     // 表格
-    QStandardItemModel *model = new QStandardItemModel(0, 3, this);
-    model->setHorizontalHeaderLabels({"姓名","学号","成绩"});
+    QStandardItemModel *model = new QStandardItemModel(0, 4, this);
+    model->setHorizontalHeaderLabels({"姓名","学号","成绩","操作"});
     table->setModel(model);
+    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    table->setAlternatingRowColors(true);
+    ScoreDelegate *delegate = new ScoreDelegate(this);
+    table->setItemDelegateForColumn(2, delegate);
+    HandleDelegate *handle = new HandleDelegate(this);
+    table->setItemDelegateForColumn(3, handle);
+    connect(handle, &HandleDelegate::deleteClicked, this, [=](int row){
+        model->removeRow(row);
+    });
+    connect(handle, &HandleDelegate::editClicked, this, [=](int row){
+        // model->removeRow(row);
+    });
 
 
     // 底部
     QProgressBar *bar = new QProgressBar;
     QPushButton *saveBtn = new QPushButton("保存");
-    QPushButton *delBtn = new QPushButton("删除");
-    // delBtn->setEnabled(false);
     footer->addWidget(bar);
     footer->addWidget(saveBtn);
-    footer->addWidget(delBtn);
 
     container->addLayout(form);
     container->addWidget(table);
@@ -69,19 +80,12 @@ StudentWidget::StudentWidget(QWidget *parent)
         QList<QStandardItem *> row;
         row << new QStandardItem(nameEdit->text())
             << new QStandardItem(numEdit->text())
-            << new QStandardItem(coreEdit->text());
+            << new QStandardItem(coreEdit->text())
+            << new QStandardItem("");
         model->appendRow(row);
     });
 
-    //删除
-    connect(delBtn, &QPushButton::clicked, this, [=](){
-        QModelIndex index = table->currentIndex();
-        if(!index.isValid()){
-            QMessageBox::information(this, "提示", "请先选择数据");
-            return;
-        }
-        model->removeRow(index.row());
-    });
+
 
     SaveStudentThread *worker = new SaveStudentThread(this);
 
@@ -100,6 +104,35 @@ StudentWidget::StudentWidget(QWidget *parent)
 
     // 加载数据
     loadFromFile(model);
+    this->setStyleSheet(R"(
+        QPushButton {
+            background-color: #4CAF50;
+            padding: 8px 16px;
+            color: white;
+            border-radius: 4px;
+        }
+        QPushButton:hover { background-color: #45a049; }
+        QPushButton:pressed { background-color: #3d8b40; }
+        QLineEdit {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 6px;
+        }
+        QLineEdit:focus { border-color: #4CAF50; }
+        QTableView {
+            alternate-background-color: #f5f5f5;
+            gridline-color: #ddd;
+        }
+        QProgressBar {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+        }
+        QProgressBar::chunk {
+            background-color: #4CAF50;
+            border-radius: 3px;
+        }
+    )");
 }
 
 void StudentWidget::saveToFile(QStandardItemModel *model)
@@ -131,7 +164,8 @@ void StudentWidget::loadFromFile(QStandardItemModel *model)
         QList<QStandardItem *> row;
         row << new QStandardItem(obj["name"].toString())
             << new QStandardItem(obj["num"].toString())
-            << new QStandardItem(obj["core"].toString());
+            << new QStandardItem(obj["core"].toString())
+            << new QStandardItem("");
         model->appendRow(row);
     }
 }
